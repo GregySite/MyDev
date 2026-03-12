@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Projets & Sites</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #fff;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .category-section {
+            max-width: 1000px;
+            margin: 0 auto 40px auto;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #475569;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            color: #64748b;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .card a {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .card a:hover {
+            background-color: var(--primary-hover);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mon Portfolio</h1>
+        <p>Découvrez l'ensemble de mes projets et réalisations</p>
+    </header>
+
+    <main id="portfolio-container">
+        </main>
+
+    <script>
+        // 1. C'EST ICI QUE TU AJOUTES TES SITES
+        // Il suffit d'ajouter un bloc entre les accolades pour un nouveau site
+        const mesSites = [
+            {
+                titre: "JLM Tech Solutions",
+                description: "Services de support informatique et électronique à Jérusalem.",
+                url: "https://ton-url-jlm.com",
+                categorie: "Services & IT"
+            },
+            {
+                titre: "Mydressing",
+                description: "Application web interactive pour organiser et visualiser sa garde-robe.",
+                url: "https://ton-url-mydressing.com",
+                categorie: "Applications Web"
+            },
+            {
+                titre: "Outil d'Automatisation QA",
+                description: "Scripts de tests automatisés développés en TypeScript.",
+                url: "https://github.com/GregySite/...",
+                categorie: "Développement"
+            },
+            {
+                titre: "Interface Batocera",
+                description: "Configuration et scripts pour station de retrogaming.",
+                url: "https://github.com/GregySite/...",
+                categorie: "Projets Perso"
+            }
+        ];
+
+        // 2. LE MOTEUR D'AFFICHAGE (Tu n'as plus besoin de toucher à cette partie)
+        const container = document.getElementById('portfolio-container');
+
+        // Extraire les catégories uniques
+        const categories = [...new Set(mesSites.map(site => site.categorie))];
+
+        // Générer le HTML pour chaque catégorie
+        categories.forEach(categorie => {
+            // Créer la section de la catégorie
+            const section = document.createElement('div');
+            section.className = 'category-section';
+            
+            // Ajouter le titre de la catégorie
+            const titreSection = document.createElement('h2');
+            titreSection.className = 'category-title';
+            titreSection.textContent = categorie;
+            section.appendChild(titreSection);
+
+            // Créer la grille pour les cartes
+            const grid = document.createElement('div');
+            grid.className = 'grid-container';
+
+            // Filtrer les sites de cette catégorie et créer les cartes
+            const sitesDeLaCategorie = mesSites.filter(site => site.categorie === categorie);
+            
+            sitesDeLaCategorie.forEach(site => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${site.titre}</h3>
+                    <p>${site.description}</p>
+                    <a href="${site.url}" target="_blank" rel="noopener noreferrer">Visiter le site</a>
+                `;
+                grid.appendChild(card);
+            });
+
+            section.appendChild(grid);
+            container.appendChild(section);
+        });
+    </script>
+
+</body>
+</html>
