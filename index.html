@@ -3,175 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Projets & Sites</title>
-    <style>
-        :root {
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-            --card-bg: #fff;
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px 0;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            color: var(--primary);
-        }
-
-        .category-section {
-            max-width: 1000px;
-            margin: 0 auto 40px auto;
-        }
-
-        .category-title {
-            font-size: 1.5rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #475569;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.25rem;
-        }
-
-        .card p {
-            color: #64748b;
-            flex-grow: 1;
-            margin-bottom: 20px;
-        }
-
-        .card a {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-            transition: background-color 0.2s;
-        }
-
-        .card a:hover {
-            background-color: var(--primary-hover);
-        }
-    </style>
+    <title>Mes Projets | Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased p-4 md:p-10">
 
-    <header>
-        <h1>Mes Sites Web</h1>
-        <p>Retrouvez ici l'ensemble de mes portails et applications</p>
-    </header>
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-800">Mes Réalisations</h1>
+                <p class="text-slate-500 mt-1">Index centralisé de mes outils et applications.</p>
+            </div>
+            <div id="stats" class="text-sm font-medium text-slate-400 bg-white px-3 py-1 rounded-full shadow-sm border border-slate-100">
+                </div>
+        </header>
 
-    <main id="portfolio-container">
-        </main>
+        <main id="container" class="space-y-8">
+            </main>
+    </div>
 
     <script>
-        // LA LISTE DE TES SITES
-        const mesSites = [
-            {
-                titre: "Parashiot",
-                description: "Application Lovable pour le suivi et l'étude des Parashiot.",
-                url: "https://parashiot.lovable.app/",
-                categorie: "Torah & Étude"
-            },
-            {
-                titre: "Tehilim",
-                description: "Portail dédié à la lecture des Tehilim.",
-                url: "https://gregysite.github.io/Tehilim/",
-                categorie: "Torah & Étude"
-            },
-            {
-                titre: "Ohavei Tsion",
-                description: "Site communautaire et informatif sur Jérusalem.",
-                url: "https://ohaveitsion.github.io/Jerusalem/",
-                categorie: "Jérusalem"
-            },
-            {
-                titre: "Le Kotel",
-                description: "Projet autour du Mur des Lamentations.",
-                url: "https://gregysite.github.io/Kotel",
-                categorie: "Jérusalem"
-            }
+        // --- BASE DE DONNÉES (Ajoute tes nouveaux sites ici) ---
+        const sites = [
+            { nom: "JLM Tech Solutions", desc: "Maintenance IT & Électronique", url: "https://jlmtech.example.com", cat: "Business", icone: "fa-tools" },
+            { nom: "Wash Timer 2.0", desc: "Gestion intelligente des cycles", url: "https://wash.example.com", cat: "Apps", icone: "fa-stopwatch" },
+            { nom: "Portal Tele", desc: "Interface IPTV personnalisée", url: "https://tele.example.com", cat: "Media", icone: "fa-tv" },
+            { nom: "MyDressing", desc: "Organisation de garde-robe", url: "https://dressing.example.com", cat: "Apps", icone: "fa-shirt" },
+            { nom: "Documentation QA", desc: "Scripts Playwright & TS", url: "https://github.com/...", cat: "Dev", icone: "fa-code" },
+            { nom: "Solar Tracker", desc: "Monitoring panneaux solaires", url: "https://solar.example.com", cat: "IoT", icone: "fa-sun" }
         ];
 
-        // MOTEUR D'AFFICHAGE (Génère automatiquement les catégories et les cartes)
-        const container = document.getElementById('portfolio-container');
+        const container = document.getElementById('container');
+        const statsEl = document.getElementById('stats');
+        
+        // Calcul des stats
+        statsEl.innerHTML = `<i class="fa-solid fa-layer-group mr-2"></i>${sites.length} Projets répertoriés`;
 
-        // Extraire les catégories uniques
-        const categories = [...new Set(mesSites.map(site => site.categorie))];
+        // Groupement par catégorie
+        const categories = [...new Set(sites.map(s => s.cat))].sort();
 
-        // Générer le HTML pour chaque catégorie
-        categories.forEach(categorie => {
-            const section = document.createElement('div');
-            section.className = 'category-section';
+        categories.forEach(cat => {
+            const section = document.createElement('section');
             
-            const titreSection = document.createElement('h2');
-            titreSection.className = 'category-title';
-            titreSection.textContent = categorie;
-            section.appendChild(titreSection);
-
+            // Titre de catégorie compact
+            const header = `<h2 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 flex items-center">
+                                <span class="h-px w-8 bg-slate-200 mr-3"></span>${cat}
+                            </h2>`;
+            
+            // Grille compacte (2 colonnes sur desktop)
             const grid = document.createElement('div');
-            grid.className = 'grid-container';
+            grid.className = "grid grid-cols-1 md:grid-cols-2 gap-3";
 
-            const sitesDeLaCategorie = mesSites.filter(site => site.categorie === categorie);
-            
-            sitesDeLaCategorie.forEach(site => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <h3>${site.titre}</h3>
-                    <p>${site.description}</p>
-                    <a href="${site.url}" target="_blank" rel="noopener noreferrer">Ouvrir le site</a>
+            sites.filter(s => s.cat === cat).forEach(s => {
+                grid.innerHTML += `
+                    <a href="${s.url}" target="_blank" class="group flex items-center p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
+                            <i class="fa-solid ${s.icone} text-lg"></i>
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-sm font-semibold text-slate-700 group-hover:text-blue-600">${s.nom}</div>
+                            <div class="text-xs text-slate-400 truncate max-w-[180px] md:max-w-[220px]">${s.desc}</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-[10px] text-slate-300 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
                 `;
-                grid.appendChild(card);
             });
 
+            section.innerHTML = header;
             section.appendChild(grid);
             container.appendChild(section);
         });
     </script>
-
 </body>
 </html>
