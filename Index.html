@@ -100,44 +100,43 @@
 <body>
 
     <header>
-        <h1>Mon Portfolio</h1>
-        <p>Découvrez l'ensemble de mes projets et réalisations</p>
+        <h1>Mes Sites Web</h1>
+        <p>Retrouvez ici l'ensemble de mes portails et applications</p>
     </header>
 
     <main id="portfolio-container">
         </main>
 
     <script>
-        // 1. C'EST ICI QUE TU AJOUTES TES SITES
-        // Il suffit d'ajouter un bloc entre les accolades pour un nouveau site
+        // LA LISTE DE TES SITES
         const mesSites = [
             {
-                titre: "JLM Tech Solutions",
-                description: "Services de support informatique et électronique à Jérusalem.",
-                url: "https://ton-url-jlm.com",
-                categorie: "Services & IT"
+                titre: "Parashiot",
+                description: "Application Lovable pour le suivi et l'étude des Parashiot.",
+                url: "https://parashiot.lovable.app/",
+                categorie: "Torah & Étude"
             },
             {
-                titre: "Mydressing",
-                description: "Application web interactive pour organiser et visualiser sa garde-robe.",
-                url: "https://ton-url-mydressing.com",
-                categorie: "Applications Web"
+                titre: "Tehilim",
+                description: "Portail dédié à la lecture des Tehilim.",
+                url: "https://gregysite.github.io/Tehilim/",
+                categorie: "Torah & Étude"
             },
             {
-                titre: "Outil d'Automatisation QA",
-                description: "Scripts de tests automatisés développés en TypeScript.",
-                url: "https://github.com/GregySite/...",
-                categorie: "Développement"
+                titre: "Ohavei Tsion",
+                description: "Site communautaire et informatif sur Jérusalem.",
+                url: "https://ohaveitsion.github.io/Jerusalem/",
+                categorie: "Jérusalem"
             },
             {
-                titre: "Interface Batocera",
-                description: "Configuration et scripts pour station de retrogaming.",
-                url: "https://github.com/GregySite/...",
-                categorie: "Projets Perso"
+                titre: "Le Kotel",
+                description: "Projet autour du Mur des Lamentations.",
+                url: "https://gregysite.github.io/Kotel",
+                categorie: "Jérusalem"
             }
         ];
 
-        // 2. LE MOTEUR D'AFFICHAGE (Tu n'as plus besoin de toucher à cette partie)
+        // MOTEUR D'AFFICHAGE (Génère automatiquement les catégories et les cartes)
         const container = document.getElementById('portfolio-container');
 
         // Extraire les catégories uniques
@@ -145,21 +144,17 @@
 
         // Générer le HTML pour chaque catégorie
         categories.forEach(categorie => {
-            // Créer la section de la catégorie
             const section = document.createElement('div');
             section.className = 'category-section';
             
-            // Ajouter le titre de la catégorie
             const titreSection = document.createElement('h2');
             titreSection.className = 'category-title';
             titreSection.textContent = categorie;
             section.appendChild(titreSection);
 
-            // Créer la grille pour les cartes
             const grid = document.createElement('div');
             grid.className = 'grid-container';
 
-            // Filtrer les sites de cette catégorie et créer les cartes
             const sitesDeLaCategorie = mesSites.filter(site => site.categorie === categorie);
             
             sitesDeLaCategorie.forEach(site => {
@@ -168,7 +163,7 @@
                 card.innerHTML = `
                     <h3>${site.titre}</h3>
                     <p>${site.description}</p>
-                    <a href="${site.url}" target="_blank" rel="noopener noreferrer">Visiter le site</a>
+                    <a href="${site.url}" target="_blank" rel="noopener noreferrer">Ouvrir le site</a>
                 `;
                 grid.appendChild(card);
             });
