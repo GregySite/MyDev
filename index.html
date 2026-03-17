@@ -104,7 +104,13 @@
             color: var(--text-dim);
         }
 
-        .card p { color: var(--text-dim); font-size: 0.9rem; margin: 0; flex-grow: 1; }
+        .card p { 
+            color: var(--text-dim); 
+            font-size: 0.9rem; 
+            margin: 0; 
+            flex-grow: 1;
+            white-space: pre-line; /* Permet au \n de fonctionner correctement */
+        }
 
         .card-footer {
             margin-top: 20px;
@@ -150,13 +156,6 @@
                 prive: false
             },
             {
-                titre: "Tele Portal",
-                description: "Accès restreint à l'interface de gestion média.\nPortail web IPTV optimisé.",
-                url: "", // LIEN SUPPRIMÉ ICI
-                categorie: "Media",
-                prive: true // MODE PRIVÉ ACTIVÉ
-            },
-            {
                 titre: "Ohavei Tsion",
                 description: "Site communautaire et informatif sur Jérusalem.",
                 url: "https://ohaveitsion.github.io/Jerusalem/",
@@ -169,6 +168,34 @@
                 url: "https://gregysite.github.io/Kotel",
                 categorie: "Jérusalem",
                 prive: false
+            },
+            {
+                titre: "Wash Timer",
+                description: "Outil numérique pour la gestion des étapes et du temps de douche.",
+                url: "http://washtimer.lovable.app/",
+                categorie: "Applications Web",
+                prive: false
+            },
+            {
+                titre: "Mydressing",
+                description: "Application web interactive pour organiser et visualiser sa garde-robe.",
+                url: "https://mydressing.lovable.app/",
+                categorie: "Applications Web",
+                prive: false
+            },
+            {
+                titre: "Link Players",
+                description: "Plateforme et application Link Players.",
+                url: "https://linkplayers.lovable.app/",
+                categorie: "Applications Web",
+                prive: false
+            },
+            {
+                titre: "Tele Portal",
+                description: "Accès restreint à l'interface de gestion média.\nPortail web IPTV optimisé.",
+                url: "", // LIEN SUPPRIMÉ ICI
+                categorie: "Media",
+                prive: true // MODE PRIVÉ ACTIVÉ
             }
         ];
 
@@ -186,7 +213,6 @@
             sitesDeLaCategorie.forEach(site => {
                 let card;
                 if (site.prive) {
-                    // Si privé : on crée une simple DIV (pas de lien <a>)
                     card = document.createElement('div');
                     card.className = 'card private';
                     card.innerHTML = `
@@ -195,7 +221,6 @@
                         <div class="card-footer">🔒 ACCÈS PRIVÉ</div>
                     `;
                 } else {
-                    // Si public : on crée un lien <a>
                     card = document.createElement('a');
                     card.className = 'card';
                     card.href = site.url;
