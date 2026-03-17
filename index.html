@@ -78,47 +78,33 @@
             text-decoration: none;
             color: inherit;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--accent-gradient);
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 0;
-        }
-
-        .card:hover {
+        /* Style pour les cartes cliquables uniquement */
+        a.card:hover {
             transform: translateY(-5px);
             border-color: rgba(59, 130, 246, 0.5);
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
-        .card:hover::before {
-            opacity: 0.03;
+        /* Style pour le mode privé */
+        .card.private {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
         }
 
-        .card h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card p {
+        .card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
+        
+        .card.private h3 {
+            text-decoration: line-through;
             color: var(--text-dim);
-            font-size: 0.9rem;
-            margin: 0;
-            position: relative;
-            z-index: 1;
-            flex-grow: 1;
         }
+
+        .card p { color: var(--text-dim); font-size: 0.9rem; margin: 0; flex-grow: 1; }
 
         .card-footer {
             margin-top: 20px;
@@ -128,9 +114,9 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            position: relative;
-            z-index: 1;
         }
+
+        .card.private .card-footer { color: #ef4444; }
 
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
@@ -149,94 +135,80 @@
 
     <script>
         const mesSites = [
-            // Catégorie : Applications Web
-            {
-                titre: "Wash Timer",
-                description: "Outil numérique pour la gestion des étapes et du temps de douche.",
-                url: "https://washtimer.lovable.app/",
-                categorie: "Applications Web"
-            },
-            {
-                titre: "MyDressing",
-                description: "Application web interactive pour organiser et visualiser sa garde-robe.",
-                url: "https://mydressing.lovable.app/",
-                categorie: "Applications Web"
-            },
-            {
-                titre: "Link Players",
-                description: "Plateforme de mise en relation et de gestion pour les joueurs.",
-                url: "https://linkplayers.lovable.app",
-                categorie: "Applications Web"
-            },
-
-            // Catégorie : Médias & Divertissement
-            {
-                titre: "Tele Portal",
-                description: "Portail web IPTV optimisé avec gestion des tokens.",
-                url: "https://gregysite.github.io/tele/",
-                categorie: "Médias & Divertissement"
-            },
-
-            // Catégorie : Torah & Étude
             {
                 titre: "Parashiot",
                 description: "Application Lovable pour le suivi et l'étude des Parashiot.",
                 url: "https://parashiot.lovable.app/",
-                categorie: "Torah & Étude"
+                categorie: "Torah & Étude",
+                prive: false
             },
             {
                 titre: "Tehilim",
                 description: "Portail dédié à la lecture des Tehilim.",
                 url: "https://gregysite.github.io/Tehilim/",
-                categorie: "Torah & Étude"
+                categorie: "Torah & Étude",
+                prive: false
             },
-
-            // Catégorie : Jérusalem
+            {
+                titre: "Tele Portal",
+                description: "Accès restreint à l'interface de gestion média.",
+                url: "", // LIEN SUPPRIMÉ ICI
+                categorie: "Media",
+                prive: true // MODE PRIVÉ ACTIVÉ
+            },
             {
                 titre: "Ohavei Tsion",
                 description: "Site communautaire et informatif sur Jérusalem.",
                 url: "https://ohaveitsion.github.io/Jerusalem/",
-                categorie: "Jérusalem"
+                categorie: "Jérusalem",
+                prive: false
             },
             {
                 titre: "Le Kotel",
                 description: "Projet autour du Mur des Lamentations.",
                 url: "https://gregysite.github.io/Kotel",
-                categorie: "Jérusalem"
+                categorie: "Jérusalem",
+                prive: false
             }
         ];
 
         const container = document.getElementById('portfolio-container');
-        
-        // Extraire l'ordre naturel tel que défini dans le tableau ci-dessus
         const categories = [...new Set(mesSites.map(site => site.categorie))];
 
         categories.forEach(categorie => {
             const section = document.createElement('div');
             section.className = 'category-section';
-            
-            section.innerHTML = `
-                <h2 class="category-title">${categorie}</h2>
-                <div class="grid-container"></div>
-            `;
+            section.innerHTML = `<h2 class="category-title">${categorie}</h2><div class="grid-container"></div>`;
 
             const grid = section.querySelector('.grid-container');
             const sitesDeLaCategorie = mesSites.filter(site => site.categorie === categorie);
             
             sitesDeLaCategorie.forEach(site => {
-                const card = document.createElement('a');
-                card.className = 'card';
-                card.href = site.url;
-                card.target = "_blank";
-                card.rel = "noopener noreferrer";
-                card.innerHTML = `
-                    <h3>${site.titre}</h3>
-                    <p>${site.description}</p>
-                    <div class="card-footer">VOIR LE SITE ➔</div>
-                `;
+                let card;
+                if (site.prive) {
+                    // Si privé : on crée une simple DIV (pas de lien <a>)
+                    card = document.createElement('div');
+                    card.className = 'card private';
+                    card.innerHTML = `
+                        <h3>${site.titre}</h3>
+                        <p>${site.description}</p>
+                        <div class="card-footer">🔒 ACCÈS PRIVÉ</div>
+                    `;
+                } else {
+                    // Si public : on crée un lien <a>
+                    card = document.createElement('a');
+                    card.className = 'card';
+                    card.href = site.url;
+                    card.target = "_blank";
+                    card.rel = "noopener noreferrer";
+                    card.innerHTML = `
+                        <h3>${site.titre}</h3>
+                        <p>${site.description}</p>
+                        <div class="card-footer">VOIR LE SITE ➔</div>
+                    `;
+                }
                 grid.appendChild(card);
             });
-
             container.appendChild(section);
         });
     </script>
