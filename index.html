@@ -67,55 +67,64 @@
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
+            gap: 20px;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            padding: 24px;
             text-decoration: none;
             color: inherit;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            position: relative;
+            overflow: hidden; /* Important pour l'image */
         }
 
-        /* Style pour les cartes cliquables uniquement */
+        .card-image {
+            width: 100%;
+            height: 140px;
+            background: #1e293b; /* Couleur de fond si pas d'image */
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
         a.card:hover {
             transform: translateY(-5px);
             border-color: rgba(59, 130, 246, 0.5);
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Style pour le mode privé */
         .card.private {
             opacity: 0.6;
             cursor: not-allowed;
-            filter: grayscale(0.5);
+            filter: grayscale(0.8);
         }
 
-        .card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
-        
-        .card.private h3 {
-            text-decoration: line-through;
-            color: var(--text-dim);
-        }
+        .card h3 { margin: 0 0 8px 0; font-size: 1.1rem; }
+        .card.private h3 { text-decoration: line-through; color: var(--text-dim); }
 
         .card p { 
             color: var(--text-dim); 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             margin: 0; 
             flex-grow: 1;
-            white-space: pre-line; /* Permet au \n de fonctionner correctement */
+            white-space: pre-line;
         }
 
         .card-footer {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            margin-top: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
             color: var(--accent);
             display: flex;
             align-items: center;
@@ -125,7 +134,7 @@
         .card.private .card-footer { color: #ef4444; }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
+            h1 { font-size: 1.8rem; }
             .grid-container { grid-template-columns: 1fr; }
         }
     </style>
@@ -143,15 +152,17 @@
         const mesSites = [
             {
                 titre: "Parashiot",
-                description: "Application Lovable pour le suivi et l'étude des Parashiot.",
+                description: "Suivi et étude des Parashiot via Lovable.",
                 url: "https://parashiot.lovable.app/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Parashiot", // Remplace par ton URL d'image
                 categorie: "Torah & Étude",
                 prive: false
             },
             {
                 titre: "Tehilim",
-                description: "Portail dédié à la lecture des Tehilim.",
+                description: "Lecture interactive des Tehilim.",
                 url: "https://gregysite.github.io/Tehilim/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Tehilim",
                 categorie: "Torah & Étude",
                 prive: false
             },
@@ -159,13 +170,15 @@
                 titre: "Mishna",
                 description: "Portail dédié à l'étude de la Mishna.",
                 url: "https://gregysite.github.io/Mishna/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Mishna",
                 categorie: "Torah & Étude",
                 prive: false
             },
             {
                 titre: "Ohavei Tsion",
-                description: "Site communautaire et informatif sur Jérusalem.",
+                description: "Site communautaire sur Jérusalem.",
                 url: "https://ohaveitsion.github.io/Jerusalem/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Jerusalem",
                 categorie: "Jérusalem",
                 prive: false
             },
@@ -173,43 +186,65 @@
                 titre: "Le Kotel",
                 description: "Projet autour du Mur des Lamentations.",
                 url: "https://gregysite.github.io/Kotel",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Kotel",
                 categorie: "Jérusalem",
                 prive: false
             },
             {
                 titre: "Wash Timer",
-                description: "Outil numérique pour la gestion des étapes et du temps de douche.",
+                description: "Gestion intelligente du temps de douche.",
                 url: "http://washtimer.lovable.app/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=WashTimer",
                 categorie: "Applications Web",
                 prive: false
             },
             {
                 titre: "Mydressing",
-                description: "Application web interactive pour organiser et visualiser sa garde-robe.",
+                description: "Organisation visuelle de garde-robe.",
                 url: "https://mydressing.lovable.app/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=MyDressing",
                 categorie: "Applications Web",
                 prive: false
             },
             {
                 titre: "Link Players",
-                description: "Plateforme et application Link Players.",
+                description: "Plateforme Link Players.",
                 url: "https://linkplayers.lovable.app/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=LinkPlayers",
                 categorie: "Applications Web",
                 prive: false
             },
             {
                 titre: "Alert Miklat",
-                description: "Application d'information et d'alerte pour les abris (Miklat).",
+                description: "Système d'information pour les abris.",
                 url: "https://gregysite.github.io/AlertMiklat/",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Miklat+Main",
+                categorie: "Applications Web",
+                prive: false
+            },
+            {
+                titre: "Compteur Miklat",
+                description: "Outil de décompte en temps réel pour Miklat.",
+                url: "https://gregysite.github.io/AlertMiklat/compteur.html",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Compteur",
+                categorie: "Applications Web",
+                prive: false
+            },
+            {
+                titre: "Analytics Miklat",
+                description: "Tableau de bord et statistiques Miklat.",
+                url: "https://gregysite.github.io/AlertMiklat/analytics.html",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Analytics",
                 categorie: "Applications Web",
                 prive: false
             },
             {
                 titre: "Tele Portal",
-                description: "Accès restreint à l'interface de gestion média.\nPortail web IPTV optimisé.",
-                url: "", // LIEN SUPPRIMÉ ICI
+                description: "Accès restreint à la gestion média.\nPortail IPTV optimisé.",
+                url: "",
+                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Prive",
                 categorie: "Media",
-                prive: true // MODE PRIVÉ ACTIVÉ
+                prive: true
             }
         ];
 
@@ -226,26 +261,26 @@
             
             sitesDeLaCategorie.forEach(site => {
                 let card;
+                const cardHTML = `
+                    <div class="card-image" style="background-image: url('${site.image}')"></div>
+                    <div class="card-content">
+                        <h3>${site.titre}</h3>
+                        <p>${site.description}</p>
+                        <div class="card-footer">${site.prive ? '🔒 ACCÈS PRIVÉ' : 'VOIR LE SITE ➔'}</div>
+                    </div>
+                `;
+
                 if (site.prive) {
                     card = document.createElement('div');
                     card.className = 'card private';
-                    card.innerHTML = `
-                        <h3>${site.titre}</h3>
-                        <p>${site.description}</p>
-                        <div class="card-footer">🔒 ACCÈS PRIVÉ</div>
-                    `;
                 } else {
                     card = document.createElement('a');
                     card.className = 'card';
                     card.href = site.url;
                     card.target = "_blank";
                     card.rel = "noopener noreferrer";
-                    card.innerHTML = `
-                        <h3>${site.titre}</h3>
-                        <p>${site.description}</p>
-                        <div class="card-footer">VOIR LE SITE ➔</div>
-                    `;
                 }
+                card.innerHTML = cardHTML;
                 grid.appendChild(card);
             });
             container.appendChild(section);
