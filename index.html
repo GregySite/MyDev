@@ -79,15 +79,15 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Important pour l'image */
+            overflow: hidden; 
         }
 
         .card-image {
             width: 100%;
-            height: 140px;
-            background: #1e293b; /* Couleur de fond si pas d'image */
+            height: 150px;
+            background: #1e293b; 
             background-size: cover;
-            background-position: center;
+            background-position: top center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -149,12 +149,15 @@
     <main id="portfolio-container"></main>
 
     <script>
+        // Utilisation de l'API Thum.io pour générer les miniatures automatiquement
+        const generatePreview = (url) => `https://image.thum.io/get/width/600/crop/400/${url}`;
+
         const mesSites = [
             {
                 titre: "Parashiot",
                 description: "Suivi et étude des Parashiot via Lovable.",
                 url: "https://parashiot.lovable.app/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Parashiot", // Remplace par ton URL d'image
+                image: generatePreview("https://parashiot.lovable.app/"),
                 categorie: "Torah & Étude",
                 prive: false
             },
@@ -162,7 +165,7 @@
                 titre: "Tehilim",
                 description: "Lecture interactive des Tehilim.",
                 url: "https://gregysite.github.io/Tehilim/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Tehilim",
+                image: generatePreview("https://gregysite.github.io/Tehilim/"),
                 categorie: "Torah & Étude",
                 prive: false
             },
@@ -170,7 +173,7 @@
                 titre: "Mishna",
                 description: "Portail dédié à l'étude de la Mishna.",
                 url: "https://gregysite.github.io/Mishna/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Mishna",
+                image: generatePreview("https://gregysite.github.io/Mishna/"),
                 categorie: "Torah & Étude",
                 prive: false
             },
@@ -178,7 +181,7 @@
                 titre: "Ohavei Tsion",
                 description: "Site communautaire sur Jérusalem.",
                 url: "https://ohaveitsion.github.io/Jerusalem/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Jerusalem",
+                image: generatePreview("https://ohaveitsion.github.io/Jerusalem/"),
                 categorie: "Jérusalem",
                 prive: false
             },
@@ -186,7 +189,7 @@
                 titre: "Le Kotel",
                 description: "Projet autour du Mur des Lamentations.",
                 url: "https://gregysite.github.io/Kotel",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Kotel",
+                image: generatePreview("https://gregysite.github.io/Kotel"),
                 categorie: "Jérusalem",
                 prive: false
             },
@@ -194,7 +197,7 @@
                 titre: "Wash Timer",
                 description: "Gestion intelligente du temps de douche.",
                 url: "http://washtimer.lovable.app/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=WashTimer",
+                image: generatePreview("http://washtimer.lovable.app/"),
                 categorie: "Applications Web",
                 prive: false
             },
@@ -202,7 +205,7 @@
                 titre: "Mydressing",
                 description: "Organisation visuelle de garde-robe.",
                 url: "https://mydressing.lovable.app/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=MyDressing",
+                image: generatePreview("https://mydressing.lovable.app/"),
                 categorie: "Applications Web",
                 prive: false
             },
@@ -210,7 +213,7 @@
                 titre: "Link Players",
                 description: "Plateforme Link Players.",
                 url: "https://linkplayers.lovable.app/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=LinkPlayers",
+                image: generatePreview("https://linkplayers.lovable.app/"),
                 categorie: "Applications Web",
                 prive: false
             },
@@ -218,23 +221,23 @@
                 titre: "Alert Miklat",
                 description: "Système d'information pour les abris.",
                 url: "https://gregysite.github.io/AlertMiklat/",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Miklat+Main",
+                image: generatePreview("https://gregysite.github.io/AlertMiklat/"),
                 categorie: "Applications Web",
                 prive: false
             },
             {
-                titre: "Compteur Miklat",
+                titre: "Dépense militaire",
                 description: "Outil de décompte en temps réel pour Miklat.",
                 url: "https://gregysite.github.io/AlertMiklat/compteur.html",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Compteur",
+                image: generatePreview("https://gregysite.github.io/AlertMiklat/compteur.html"),
                 categorie: "Applications Web",
                 prive: false
             },
             {
-                titre: "Analytics Miklat",
-                description: "Tableau de bord et statistiques Miklat.",
+                titre: "Analytics de missiles",
+                description: "Tableau de bord et statistiques.",
                 url: "https://gregysite.github.io/AlertMiklat/analytics.html",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Analytics",
+                image: generatePreview("https://gregysite.github.io/AlertMiklat/analytics.html"),
                 categorie: "Applications Web",
                 prive: false
             },
@@ -242,7 +245,7 @@
                 titre: "Tele Portal",
                 description: "Accès restreint à la gestion média.\nPortail IPTV optimisé.",
                 url: "",
-                image: "https://via.placeholder.com/400x200/1e293b/ffffff?text=Prive",
+                image: "https://images.unsplash.com/photo-1614064641913-6b22c7a36f45?q=80&w=600&auto=format&fit=crop", // Image abstraite pour le site privé
                 categorie: "Media",
                 prive: true
             }
