@@ -8,12 +8,12 @@
     <style>
         :root {
             --bg: #0d1117;
-            --card-bg: #161b22;
+            --card-bg: #161b2b;
             --text-main: #c9d1d9;
             --text-dim: #8b949e;
             --accent: #58a6ff;
             --border: #30363d;
-            --sub-bg: rgba(88, 166, 255, 0.05);
+            --sub-bg: rgba(88, 166, 255, 0.03); /* Teinte bleutée très subtile */
         }
 
         body {
@@ -66,6 +66,7 @@
             gap: 24px;
         }
 
+        /* Styles des Cartes Principales */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -101,32 +102,30 @@
 
         .desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 0; }
 
-        /* Sub-sections specifically for Alert Miklat ecosystem */
+        /* --- Zone des Sous-rubriques (Miklat) --- */
         .sub-container {
-            grid-column: 1 / -1;
+            grid-column: 1 / -1; /* Prend toute la largeur de la grille */
             margin-top: -10px;
             padding: 20px;
             background: var(--sub-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
+        /* Styles des Sous-cartes (Mini-cartes) */
         .sub-card {
-            background: var(--bg);
-            padding: 16px;
-            border-radius: 8px;
+            background: var(--bg); /* Fond plus sombre pour contraster */
+            border-radius: 10px;
             border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 12px;
             text-decoration: none;
             color: var(--text-main);
-            font-size: 0.9rem;
-            font-weight: 500;
+            overflow: hidden;
             transition: 0.2s;
+            display: flex;
+            flex-direction: column;
         }
 
         .sub-card:hover { 
@@ -134,6 +133,26 @@
             background: #1c2128;
             color: #fff;
         }
+
+        .sub-preview {
+            width: 100%;
+            height: 120px; /* Plus petite que la principale */
+            background: #000;
+            background-size: cover;
+            background-position: top center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sub-content {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .sub-content i { color: var(--accent); opacity: 0.8; }
 
         .private-badge {
             font-size: 0.65rem;
@@ -161,7 +180,8 @@
     <div class="container" id="main-container"></div>
 
     <script>
-        // Automatic Screenshot API
+        // API de capture d'écran automatique (thum.io)
+        // Crop/800 permet de limiter la hauteur de capture pour un chargement plus rapide
         const getShot = (url) => `https://image.thum.io/get/width/600/crop/800/${url}`;
 
         const projects = [
@@ -179,6 +199,7 @@
                 url: "https://gregysite.github.io/AlertMiklat/", 
                 cat: "Web Apps", 
                 icon: "shield-alert",
+                // Sous-rubriques spécifiques
                 subs: [
                     { title: "Defense Spending", url: "https://gregysite.github.io/AlertMiklat/compteur.html", icon: "trending-up" },
                     { title: "Missile Analytics", url: "https://gregysite.github.io/AlertMiklat/analytics.html", icon: "bar-chart-3" }
@@ -191,8 +212,10 @@
         const categories = [...new Set(projects.map(p => p.cat))];
 
         categories.forEach(cat => {
-            container.innerHTML += `<div class="category-title">${cat}</div><div class="grid" id="grid-${cat.replace(/\s|&/g, '')}"></div>`;
-            const grid = document.getElementById(`grid-${cat.replace(/\s|&/g, '')}`);
+            // Nettoyage du titre de la catégorie pour l'ID HTML
+            const catId = cat.replace(/\s|&/g, '');
+            container.innerHTML += `<div class="category-title">${cat}</div><div class="grid" id="grid-${catId}"></div>`;
+            const grid = document.getElementById(`grid-${catId}`);
 
             projects.filter(p => p.cat === cat).forEach(p => {
                 const isP = p.isPrivate;
@@ -211,15 +234,18 @@
                 `;
                 grid.innerHTML += card;
 
-                // Handle Sub-items for Parent projects
+                // Gestion des sous-rubriques (subs) si elles existent
                 if (p.subs) {
                     const subGrid = document.createElement('div');
                     subGrid.className = 'sub-container';
                     p.subs.forEach(sub => {
                         subGrid.innerHTML += `
                             <a href="${sub.url}" target="_blank" class="sub-card">
-                                <i data-lucide="${sub.icon}" size="18"></i>
-                                <span>${sub.title}</span>
+                                <div class="sub-preview" style="background-image: url('${getShot(sub.url)}')"></div>
+                                <div class="sub-content">
+                                    <i data-lucide="${sub.icon}" size="18"></i>
+                                    <span>${sub.title}</span>
+                                </div>
                             </a>
                         `;
                     });
@@ -228,6 +254,7 @@
             });
         });
 
+        // Initialisation des icônes Lucide après la génération du HTML
         lucide.createIcons();
     </script>
 </body>
