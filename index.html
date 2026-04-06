@@ -3,270 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Foundry | Project Hub</title>
+    <title>The Vault | Project Hub</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg: #0b0f1a;
-            --card-bg: #161b2b;
-            --text-main: #ffffff;
+            --bg: #05070a;
+            --card-bg: #0f121a;
+            --text-main: #e2e8f0;
             --text-dim: #94a3b8;
             --accent: #3b82f6;
-            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
-            
-            /* Pattern Palettes */
-            --pattern-study: linear-gradient(45deg, #f59e0b, #d97706);
-            --pattern-local: linear-gradient(45deg, #10b981, #047857);
-            --pattern-apps: linear-gradient(45deg, #3b82f6, #1d4ed8);
-            --pattern-media: linear-gradient(45deg, #ec4899, #be185d);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
             margin: 0;
-            padding: 40px 20px;
-            line-height: 1.5;
+            padding: 60px 20px;
+            line-height: 1.6;
         }
 
         header {
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto 60px auto;
+            margin-bottom: 80px;
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
-            letter-spacing: -1px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.02em;
+            color: #fff;
         }
 
-        header p { color: var(--text-dim); font-size: 1.1rem; font-weight: 300; }
+        header p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
 
         .category-section {
-            max-width: 1000px;
-            margin: 0 auto 50px auto;
+            max-width: 1100px;
+            margin: 0 auto 60px auto;
         }
 
         .category-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent);
-            margin-bottom: 25px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .category-title::after {
             content: "";
             height: 1px;
             flex-grow: 1;
-            background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), transparent);
+            background: var(--border);
             margin-left: 20px;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
 
         .card {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
             text-decoration: none;
             color: inherit;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             position: relative;
-        }
-
-        .card-pattern {
-            width: 100%;
-            height: 100px;
-            position: relative;
-            overflow: hidden;
-            background: #1e293b;
-        }
-
-        .card-pattern::after {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            opacity: 0.2;
-            animation: patternRotate 25s linear infinite;
-        }
-
-        @keyframes patternRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .card-content {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2));
         }
 
         a.card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(59, 130, 246, 0.6);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 15px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent);
+            background: #141822;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.5);
         }
 
-        .card.private {
-            opacity: 0.6;
-            cursor: not-allowed;
-            filter: saturate(0.5);
+        .card-icon {
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.8;
         }
 
-        .card h3 { margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 700; }
-        .card.private h3 { text-decoration: line-through; color: var(--text-dim); }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+        }
 
-        .card p { 
-            color: var(--text-dim); 
-            font-size: 0.9rem; 
-            margin: 0; 
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin: 0 0 20px 0;
             flex-grow: 1;
-            line-height: 1.6;
         }
 
         .card-footer {
-            margin-top: 20px;
-            font-size: 0.7rem;
-            font-weight: 800;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             color: var(--accent);
             display: flex;
             align-items: center;
-            gap: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            gap: 8px;
         }
 
-        .card.private .card-footer { color: #ef4444; }
+        .card.private {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .card.private .card-footer { color: #f87171; }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .grid-container { grid-template-columns: 1fr; }
+            body { padding: 40px 15px; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Digital Foundry</h1>
-        <p>Central hub for my web applications, tools, and digital experiments.</p>
+        <h1>The Vault</h1>
+        <p>A centralized repository of my web experiments and tools.</p>
     </header>
 
     <main id="portfolio-container"></main>
 
     <script>
         const projects = [
-            {
-                title: "Parashiot",
-                desc: "Real-time tracking and study platform for weekly Parashiot.",
-                url: "https://parashiot.lovable.app/",
-                cat: "Torah & Study",
-                isPrivate: false
-            },
-            {
-                title: "Tehilim",
-                desc: "Interactive portal for Tehilim reading and study.",
-                url: "https://gregysite.github.io/Tehilim/",
-                cat: "Torah & Study",
-                isPrivate: false
-            },
-            {
-                title: "Mishna",
-                desc: "Comprehensive study guide for Mishnaic texts.",
-                url: "https://gregysite.github.io/Mishna/",
-                cat: "Torah & Study",
-                isPrivate: false
-            },
-            {
-                title: "Ohavei Tsion",
-                desc: "Community-driven site for Jerusalem news and info.",
-                url: "https://ohaveitsion.github.io/Jerusalem/",
-                cat: "Jerusalem",
-                isPrivate: false
-            },
-            {
-                title: "The Kotel",
-                desc: "Interactive project centered around the Western Wall.",
-                url: "https://gregysite.github.io/Kotel",
-                cat: "Jerusalem",
-                isPrivate: false
-            },
-            {
-                title: "Wash Timer",
-                desc: "Smart utility for shower duration and water management.",
-                url: "http://washtimer.lovable.app/",
-                cat: "Web Applications",
-                isPrivate: false
-            },
-            {
-                title: "MyDressing",
-                desc: "Visual wardrobe organizer and style planner.",
-                url: "https://mydressing.lovable.app/",
-                cat: "Web Applications",
-                isPrivate: false
-            },
-            {
-                title: "Link Players",
-                desc: "Advanced platform for player connectivity.",
-                url: "https://linkplayers.lovable.app/",
-                cat: "Web Applications",
-                isPrivate: false
-            },
-            {
-                title: "Alert Miklat",
-                desc: "Safety information system for shelter locations.",
-                url: "https://gregysite.github.io/AlertMiklat/",
-                cat: "Web Applications",
-                isPrivate: false
-            },
-            {
-                title: "Defense Spending",
-                desc: "Real-time counter and analysis for security costs.",
-                url: "https://gregysite.github.io/AlertMiklat/compteur.html",
-                cat: "Web Applications",
-                isPrivate: false
-            },
-            {
-                title: "Missile Analytics",
-                desc: "Data-driven dashboard for missile tracking stats.",
-                url: "https://gregysite.github.io/AlertMiklat/analytics.html",
-                cat: "Web Applications",
-                isPrivate: false
-            },
-            {
-                title: "Tele Portal",
-                desc: "Restricted IPTV management and media dashboard.",
-                url: "",
-                cat: "Media",
-                isPrivate: true
-            }
+            { title: "Parashiot", desc: "Real-time tracking and study platform for weekly Parashiot.", url: "https://parashiot.lovable.app/", cat: "Torah & Study", icon: "book-open" },
+            { title: "Tehilim", desc: "Interactive portal for Tehilim reading and study.", url: "https://gregysite.github.io/Tehilim/", cat: "Torah & Study", icon: "scroll" },
+            { title: "Mishna", desc: "Comprehensive study guide for Mishnaic texts.", url: "https://gregysite.github.io/Mishna/", cat: "Torah & Study", icon: "library" },
+            { title: "Ohavei Tsion", desc: "Community-driven site for Jerusalem news and info.", url: "https://ohaveitsion.github.io/Jerusalem/", cat: "Jerusalem", icon: "map-pin" },
+            { title: "The Kotel", desc: "Interactive project centered around the Western Wall.", url: "https://gregysite.github.io/Kotel", cat: "Jerusalem", icon: "landmark" },
+            { title: "Wash Timer", desc: "Smart utility for shower duration and water management.", url: "http://washtimer.lovable.app/", cat: "Web Applications", icon: "timer" },
+            { title: "MyDressing", desc: "Visual wardrobe organizer and style planner.", url: "https://mydressing.lovable.app/", cat: "Web Applications", icon: "shirt" },
+            { title: "Link Players", desc: "Advanced platform for player connectivity.", url: "https://linkplayers.lovable.app/", cat: "Web Applications", icon: "users" },
+            { title: "Alert Miklat", desc: "Safety information system for shelter locations.", url: "https://gregysite.github.io/AlertMiklat/", cat: "Web Applications", icon: "shield-alert" },
+            { title: "Defense Spending", desc: "Real-time counter and analysis for security costs.", url: "https://gregysite.github.io/AlertMiklat/compteur.html", cat: "Web Applications", icon: "trending-up" },
+            { title: "Missile Analytics", desc: "Data-driven dashboard for missile tracking stats.", url: "https://gregysite.github.io/AlertMiklat/analytics.html", cat: "Web Applications", icon: "bar-chart-3" },
+            { title: "Tele Portal", desc: "Restricted IPTV management and media dashboard.", url: "", cat: "Media", icon: "tv", isPrivate: true }
         ];
-
-        const getCatPattern = (cat) => {
-            const c = cat.toLowerCase();
-            if (c.includes("study")) return "var(--pattern-study)";
-            if (c.includes("jerusalem")) return "var(--pattern-local)";
-            if (c.includes("web")) return "var(--pattern-apps)";
-            if (c.includes("media")) return "var(--pattern-media)";
-            return "var(--accent-gradient)";
-        };
 
         const container = document.getElementById('portfolio-container');
         const cats = [...new Set(projects.map(p => p.cat))];
@@ -277,36 +171,29 @@
             section.innerHTML = `<h2 class="category-title">${cat}</h2><div class="grid-container"></div>`;
 
             const grid = section.querySelector('.grid-container');
-            const catProjects = projects.filter(p => p.cat === cat);
-            
-            catProjects.forEach(p => {
-                let card;
-                const pattern = getCatPattern(p.cat);
-
-                const html = `
-                    <div class="card-pattern" style="background: ${pattern}"></div>
-                    <div class="card-content">
-                        <h3>${p.title}</h3>
-                        <p>${p.desc}</p>
-                        <div class="card-footer">${p.isPrivate ? '🔒 Private Access' : 'Launch Site ➔'}</div>
-                    </div>
-                `;
-
-                if (p.isPrivate) {
-                    card = document.createElement('div');
-                    card.className = 'card private';
-                } else {
-                    card = document.createElement('a');
-                    card.className = 'card';
+            projects.filter(p => p.cat === cat).forEach(p => {
+                const card = p.isPrivate ? document.createElement('div') : document.createElement('a');
+                card.className = `card ${p.isPrivate ? 'private' : ''}`;
+                if(!p.isPrivate) {
                     card.href = p.url;
                     card.target = "_blank";
-                    card.rel = "noopener noreferrer";
                 }
-                card.innerHTML = html;
+
+                card.innerHTML = `
+                    <div class="card-icon"><i data-lucide="${p.icon}"></i></div>
+                    <h3>${p.title}</h3>
+                    <p>${p.desc}</p>
+                    <div class="card-footer">
+                        ${p.isPrivate ? '<i data-lucide="lock" size="14"></i> Restricted Access' : 'Open Project <i data-lucide="external-link" size="14"></i>'}
+                    </div>
+                `;
                 grid.appendChild(card);
             });
             container.appendChild(section);
         });
+
+        // Initialisation des icônes
+        lucide.createIcons();
     </script>
 </body>
 </html>
