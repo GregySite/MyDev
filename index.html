@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Projets & Sites</title>
+    <title>Digital Foundry | Project Hub</title>
     <style>
         :root {
             --bg: #0b0f1a;
@@ -12,6 +12,12 @@
             --text-dim: #94a3b8;
             --accent: #3b82f6;
             --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+            
+            /* Pattern Palettes */
+            --pattern-study: linear-gradient(45deg, #f59e0b, #d97706);
+            --pattern-local: linear-gradient(45deg, #10b981, #047857);
+            --pattern-apps: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            --pattern-media: linear-gradient(45deg, #ec4899, #be185d);
         }
 
         body {
@@ -30,15 +36,16 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 10px;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 800;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
-        header p { color: var(--text-dim); font-size: 1.1rem; }
+        header p { color: var(--text-dim); font-size: 1.1rem; font-weight: 300; }
 
         .category-section {
             max-width: 1000px;
@@ -48,19 +55,19 @@
         .category-title {
             display: flex;
             align-items: center;
-            font-size: 1rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: var(--accent);
             margin-bottom: 25px;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .category-title::after {
             content: "";
             height: 1px;
             flex-grow: 1;
-            background: linear-gradient(90deg, rgba(59, 130, 246, 0.5), transparent);
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), transparent);
             margin-left: 20px;
         }
 
@@ -73,68 +80,84 @@
         .card {
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            border-radius: 16px;
             text-decoration: none;
             color: inherit;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
-            overflow: hidden; 
+            overflow: hidden;
+            position: relative;
         }
 
-        .card-image {
+        .card-pattern {
             width: 100%;
-            height: 150px;
-            background: #1e293b; 
-            background-size: cover;
-            background-position: top center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+            background: #1e293b;
+        }
+
+        .card-pattern::after {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            opacity: 0.2;
+            animation: patternRotate 25s linear infinite;
+        }
+
+        @keyframes patternRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .card-content {
-            padding: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2));
         }
 
         a.card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 15px rgba(59, 130, 246, 0.2);
         }
 
         .card.private {
             opacity: 0.6;
             cursor: not-allowed;
-            filter: grayscale(0.8);
+            filter: saturate(0.5);
         }
 
-        .card h3 { margin: 0 0 8px 0; font-size: 1.1rem; }
+        .card h3 { margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 700; }
         .card.private h3 { text-decoration: line-through; color: var(--text-dim); }
 
         .card p { 
             color: var(--text-dim); 
-            font-size: 0.85rem; 
+            font-size: 0.9rem; 
             margin: 0; 
             flex-grow: 1;
-            white-space: pre-line;
+            line-height: 1.6;
         }
 
         .card-footer {
-            margin-top: 15px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            margin-top: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
             color: var(--accent);
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .card.private .card-footer { color: #ef4444; }
 
         @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
+            h1 { font-size: 2.2rem; }
             .grid-container { grid-template-columns: 1fr; }
         }
     </style>
@@ -142,148 +165,144 @@
 <body>
 
     <header>
-        <h1>Mes Réalisations</h1>
-        <p>Hub central de mes projets web et outils numériques</p>
+        <h1>Digital Foundry</h1>
+        <p>Central hub for my web applications, tools, and digital experiments.</p>
     </header>
 
     <main id="portfolio-container"></main>
 
     <script>
-        // Utilisation de l'API Thum.io pour générer les miniatures automatiquement
-        const generatePreview = (url) => `https://image.thum.io/get/width/600/crop/400/${url}`;
-
-        const mesSites = [
+        const projects = [
             {
-                titre: "Parashiot",
-                description: "Suivi et étude des Parashiot via Lovable.",
+                title: "Parashiot",
+                desc: "Real-time tracking and study platform for weekly Parashiot.",
                 url: "https://parashiot.lovable.app/",
-                image: generatePreview("https://parashiot.lovable.app/"),
-                categorie: "Torah & Étude",
-                prive: false
+                cat: "Torah & Study",
+                isPrivate: false
             },
             {
-                titre: "Tehilim",
-                description: "Lecture interactive des Tehilim.",
+                title: "Tehilim",
+                desc: "Interactive portal for Tehilim reading and study.",
                 url: "https://gregysite.github.io/Tehilim/",
-                image: generatePreview("https://gregysite.github.io/Tehilim/"),
-                categorie: "Torah & Étude",
-                prive: false
+                cat: "Torah & Study",
+                isPrivate: false
             },
             {
-                titre: "Mishna",
-                description: "Portail dédié à l'étude de la Mishna.",
+                title: "Mishna",
+                desc: "Comprehensive study guide for Mishnaic texts.",
                 url: "https://gregysite.github.io/Mishna/",
-                image: generatePreview("https://gregysite.github.io/Mishna/"),
-                categorie: "Torah & Étude",
-                prive: false
+                cat: "Torah & Study",
+                isPrivate: false
             },
             {
-                titre: "Ohavei Tsion",
-                description: "Site communautaire sur Jérusalem.",
+                title: "Ohavei Tsion",
+                desc: "Community-driven site for Jerusalem news and info.",
                 url: "https://ohaveitsion.github.io/Jerusalem/",
-                image: generatePreview("https://ohaveitsion.github.io/Jerusalem/"),
-                categorie: "Jérusalem",
-                prive: false
+                cat: "Jerusalem",
+                isPrivate: false
             },
             {
-                titre: "Le Kotel",
-                description: "Projet autour du Mur des Lamentations.",
+                title: "The Kotel",
+                desc: "Interactive project centered around the Western Wall.",
                 url: "https://gregysite.github.io/Kotel",
-                image: generatePreview("https://gregysite.github.io/Kotel"),
-                categorie: "Jérusalem",
-                prive: false
+                cat: "Jerusalem",
+                isPrivate: false
             },
             {
-                titre: "Wash Timer",
-                description: "Gestion intelligente du temps de douche.",
+                title: "Wash Timer",
+                desc: "Smart utility for shower duration and water management.",
                 url: "http://washtimer.lovable.app/",
-                image: generatePreview("http://washtimer.lovable.app/"),
-                categorie: "Applications Web",
-                prive: false
+                cat: "Web Applications",
+                isPrivate: false
             },
             {
-                titre: "Mydressing",
-                description: "Organisation visuelle de garde-robe.",
+                title: "MyDressing",
+                desc: "Visual wardrobe organizer and style planner.",
                 url: "https://mydressing.lovable.app/",
-                image: generatePreview("https://mydressing.lovable.app/"),
-                categorie: "Applications Web",
-                prive: false
+                cat: "Web Applications",
+                isPrivate: false
             },
             {
-                titre: "Link Players",
-                description: "Plateforme Link Players.",
+                title: "Link Players",
+                desc: "Advanced platform for player connectivity.",
                 url: "https://linkplayers.lovable.app/",
-                image: generatePreview("https://linkplayers.lovable.app/"),
-                categorie: "Applications Web",
-                prive: false
+                cat: "Web Applications",
+                isPrivate: false
             },
             {
-                titre: "Alert Miklat",
-                description: "Système d'information pour les abris.",
+                title: "Alert Miklat",
+                desc: "Safety information system for shelter locations.",
                 url: "https://gregysite.github.io/AlertMiklat/",
-                image: generatePreview("https://gregysite.github.io/AlertMiklat/"),
-                categorie: "Applications Web",
-                prive: false
+                cat: "Web Applications",
+                isPrivate: false
             },
             {
-                titre: "Dépense militaire",
-                description: "Outil de décompte en temps réel pour Miklat.",
+                title: "Defense Spending",
+                desc: "Real-time counter and analysis for security costs.",
                 url: "https://gregysite.github.io/AlertMiklat/compteur.html",
-                image: generatePreview("https://gregysite.github.io/AlertMiklat/compteur.html"),
-                categorie: "Applications Web",
-                prive: false
+                cat: "Web Applications",
+                isPrivate: false
             },
             {
-                titre: "Analytics de missiles",
-                description: "Tableau de bord et statistiques.",
+                title: "Missile Analytics",
+                desc: "Data-driven dashboard for missile tracking stats.",
                 url: "https://gregysite.github.io/AlertMiklat/analytics.html",
-                image: generatePreview("https://gregysite.github.io/AlertMiklat/analytics.html"),
-                categorie: "Applications Web",
-                prive: false
+                cat: "Web Applications",
+                isPrivate: false
             },
             {
-                titre: "Tele Portal",
-                description: "Accès restreint à la gestion média.\nPortail IPTV optimisé.",
+                title: "Tele Portal",
+                desc: "Restricted IPTV management and media dashboard.",
                 url: "",
-                image: "https://images.unsplash.com/photo-1614064641913-6b22c7a36f45?q=80&w=600&auto=format&fit=crop", // Image abstraite pour le site privé
-                categorie: "Media",
-                prive: true
+                cat: "Media",
+                isPrivate: true
             }
         ];
 
-        const container = document.getElementById('portfolio-container');
-        const categories = [...new Set(mesSites.map(site => site.categorie))];
+        const getCatPattern = (cat) => {
+            const c = cat.toLowerCase();
+            if (c.includes("study")) return "var(--pattern-study)";
+            if (c.includes("jerusalem")) return "var(--pattern-local)";
+            if (c.includes("web")) return "var(--pattern-apps)";
+            if (c.includes("media")) return "var(--pattern-media)";
+            return "var(--accent-gradient)";
+        };
 
-        categories.forEach(categorie => {
+        const container = document.getElementById('portfolio-container');
+        const cats = [...new Set(projects.map(p => p.cat))];
+
+        cats.forEach(cat => {
             const section = document.createElement('div');
             section.className = 'category-section';
-            section.innerHTML = `<h2 class="category-title">${categorie}</h2><div class="grid-container"></div>`;
+            section.innerHTML = `<h2 class="category-title">${cat}</h2><div class="grid-container"></div>`;
 
             const grid = section.querySelector('.grid-container');
-            const sitesDeLaCategorie = mesSites.filter(site => site.categorie === categorie);
+            const catProjects = projects.filter(p => p.cat === cat);
             
-            sitesDeLaCategorie.forEach(site => {
+            catProjects.forEach(p => {
                 let card;
-                const cardHTML = `
-                    <div class="card-image" style="background-image: url('${site.image}')"></div>
+                const pattern = getCatPattern(p.cat);
+
+                const html = `
+                    <div class="card-pattern" style="background: ${pattern}"></div>
                     <div class="card-content">
-                        <h3>${site.titre}</h3>
-                        <p>${site.description}</p>
-                        <div class="card-footer">${site.prive ? '🔒 ACCÈS PRIVÉ' : 'VOIR LE SITE ➔'}</div>
+                        <h3>${p.title}</h3>
+                        <p>${p.desc}</p>
+                        <div class="card-footer">${p.isPrivate ? '🔒 Private Access' : 'Launch Site ➔'}</div>
                     </div>
                 `;
 
-                if (site.prive) {
+                if (p.isPrivate) {
                     card = document.createElement('div');
                     card.className = 'card private';
                 } else {
                     card = document.createElement('a');
                     card.className = 'card';
-                    card.href = site.url;
+                    card.href = p.url;
                     card.target = "_blank";
                     card.rel = "noopener noreferrer";
                 }
-                card.innerHTML = cardHTML;
+                card.innerHTML = html;
                 grid.appendChild(card);
             });
             container.appendChild(section);
