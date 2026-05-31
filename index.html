@@ -1,261 +1,654 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyDev | Project Hub</title>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        :root {
-            --bg: #0d1117;
-            --card-bg: #161b2b;
-            --text-main: #c9d1d9;
-            --text-dim: #8b949e;
-            --accent: #58a6ff;
-            --border: #30363d;
-            --sub-bg: rgba(88, 166, 255, 0.03); /* Teinte bleutée très subtile */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greg · Dev Portfolio</title>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            margin: 0;
-            padding: 50px 20px;
-        }
+<!-- Meta OG -->
+<meta name="description" content="Portfolio de Greg — Apps, outils & sites web : Torah, Jérusalem, musique, utilitaires et extensions Chrome.">
+<meta property="og:title" content="Greg · Dev Portfolio">
+<meta property="og:description" content="15 projets · 7 catégories · GregySite, OhaveiTsion, ChromePluginStudio">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gregysite.github.io/MyDev/">
+<meta property="og:image" content="https://gregysite.github.io/MyDev/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Greg · Dev Portfolio">
+<meta name="twitter:description" content="15 projets · 7 catégories · GregySite, OhaveiTsion, ChromePluginStudio">
 
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+<!-- Favicon SVG inline -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0a0a'/><text x='50' y='72' font-family='system-ui,sans-serif' font-size='62' font-weight='900' text-anchor='middle' fill='%2338bdf8'>G</text></svg>">
 
-        h1 {
-            font-size: 2.5rem;
-            color: #fff;
-            margin: 0;
-            letter-spacing: -1px;
-            font-weight: 800;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-        header p { color: var(--text-dim); margin-top: 8px; font-size: 1.1rem; }
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;
+  --ink:#f0ece4;
+  --muted:rgba(240,236,228,0.4);
+  --faint:rgba(240,236,228,0.08);
+  --border:rgba(240,236,228,0.08);
+  --border2:rgba(240,236,228,0.16);
+  --a1:#38bdf8;
+  --a2:#e8c547;
+  --a3:#7eb8f7;
+  --a4:#c084fc;
+}
+html{scroll-behavior:smooth;color-scheme:dark}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:400;
+  overflow-x:hidden;
+  cursor:none;
+  min-height:100vh;
+}
 
-        .container { max-width: 1100px; margin: 0 auto; }
+/* ── SCROLL PROGRESS ── */
+#progress{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,var(--a1),var(--a4));
+  z-index:9998;transition:width .1s linear;
+}
 
-        .category-title {
-            font-size: 0.75rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 40px 0 20px 0;
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-        }
+/* ── CUSTOM CURSOR ── */
+#cursor{
+  width:12px;height:12px;
+  background:var(--a1);
+  border-radius:50%;
+  position:fixed;pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .18s,height .18s,background .18s,opacity .18s;
+  mix-blend-mode:difference;
+}
+#cursor.big{width:38px;height:38px}
+#cursor.hidden{opacity:0}
 
-        .category-title::after {
-            content: "";
-            height: 1px;
-            flex-grow: 1;
-            background: var(--border);
-            margin-left: 20px;
-        }
+/* ── ANIMATED MESH BACKGROUND ── */
+.mesh{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.mesh-orb{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:.12;
+  animation:float1 14s ease-in-out infinite;
+}
+.mesh-orb:nth-child(1){
+  width:600px;height:600px;
+  background:radial-gradient(circle,#38bdf8,transparent 70%);
+  top:-200px;left:-100px;
+  animation-name:float1;animation-duration:16s;
+}
+.mesh-orb:nth-child(2){
+  width:500px;height:500px;
+  background:radial-gradient(circle,#c084fc,transparent 70%);
+  bottom:-150px;right:-100px;
+  animation-name:float2;animation-duration:20s;
+}
+.mesh-orb:nth-child(3){
+  width:400px;height:400px;
+  background:radial-gradient(circle,#38bdf8,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  opacity:.06;
+  animation-name:float3;animation-duration:12s;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-        }
+@keyframes float1{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(60px,40px) scale(1.08)}
+  66%{transform:translate(-30px,70px) scale(.96)}
+}
+@keyframes float2{
+  0%,100%{transform:translate(0,0) scale(1)}
+  40%{transform:translate(-80px,-50px) scale(1.1)}
+  70%{transform:translate(40px,-30px) scale(.95)}
+}
+@keyframes float3{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.3)}
+}
 
-        /* Styles des Cartes Principales */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
+/* grid overlay */
+.mesh-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(240,236,228,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(240,236,228,.025) 1px,transparent 1px);
+  background-size:60px 60px;
+}
 
-        a.card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-        }
+/* ── GRAIN ── */
+.grain{
+  position:fixed;inset:0;z-index:9001;pointer-events:none;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
 
-        .preview {
-            width: 100%;
-            height: 170px;
-            background: #000;
-            background-size: cover;
-            background-position: top center;
-            border-bottom: 1px solid var(--border);
-        }
+/* ── LAYOUT ── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 2rem 6rem;position:relative;z-index:1}
 
-        .content { padding: 20px; flex-grow: 1; }
+/* ── NAV ── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:2rem 0;
+  border-bottom:1px solid var(--border2);
+  margin-bottom:6rem;
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,10,.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  margin-left:-2rem;margin-right:-2rem;
+  padding-left:2rem;padding-right:2rem;
+}
+.nav-logo{
+  font-family:'Space Mono',monospace;
+  font-size:12px;color:var(--muted);letter-spacing:.06em;
+}
+.nav-logo b{color:var(--ink);font-weight:700}
 
-        .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-        .card-header i { color: var(--accent); }
-        .card-header h3 { margin: 0; font-size: 1.25rem; color: #f0f6fc; }
+.nav-right{display:flex;align-items:center;gap:1rem}
 
-        .desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 0; }
+.nav-orgs{display:flex;gap:.5rem}
+.nav-org{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border:1px solid var(--border2);
+  color:var(--muted);
+  transition:border-color .2s,color .2s;
+}
+.nav-org:hover{border-color:var(--a1);color:var(--a1)}
 
-        /* --- Zone des Sous-rubriques (Miklat) --- */
-        .sub-container {
-            grid-column: 1 / -1; /* Prend toute la largeur de la grille */
-            margin-top: -10px;
-            padding: 20px;
-            background: var(--sub-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
+/* nav section indicators */
 
-        /* Styles des Sous-cartes (Mini-cartes) */
-        .sub-card {
-            background: var(--bg); /* Fond plus sombre pour contraster */
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            text-decoration: none;
-            color: var(--text-main);
-            overflow: hidden;
-            transition: 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
+/* ── HERO ── */
+.hero{margin-bottom:6rem}
 
-        .sub-card:hover { 
-            border-color: var(--accent); 
-            background: #1c2128;
-            color: #fff;
-        }
+.hero-eyebrow{
+  font-family:'Space Mono',monospace;font-size:11px;
+  color:var(--a1);letter-spacing:.18em;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;margin-bottom:2rem;
+  opacity:0;animation:fadeUp .6s .1s forwards;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--a1)}
 
-        .sub-preview {
-            width: 100%;
-            height: 120px; /* Plus petite que la principale */
-            background: #000;
-            background-size: cover;
-            background-position: top center;
-            border-bottom: 1px solid var(--border);
-        }
+.hero-h1{
+  font-size:clamp(4rem,9vw,9rem);
+  font-weight:700;line-height:.92;letter-spacing:-.04em;
+  margin-bottom:2rem;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+.hero-h1 .line2{
+  -webkit-text-stroke:1px rgba(240,236,228,.22);
+  color:transparent;display:block;
+}
+.hero-h1 .accent{color:var(--a1)}
 
-        .sub-content {
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
+.hero-bottom{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;
+  opacity:0;animation:fadeUp .7s .35s forwards;flex-wrap:wrap;
+}
+.hero-sub{font-size:14px;color:var(--muted);line-height:1.8;max-width:380px}
+.hero-nums{display:flex;gap:3rem}
+.hero-num{display:flex;flex-direction:column;gap:4px}
+.hero-n{
+  font-size:3.5rem;font-weight:700;letter-spacing:-.04em;line-height:1;
+  background:linear-gradient(135deg,var(--ink) 0%,rgba(240,236,228,.35) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-l{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:.12em;text-transform:uppercase;
+}
 
-        .sub-content i { color: var(--accent); opacity: 0.8; }
+/* ── MARQUEE ── */
+.marquee-wrap{
+  overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:1rem 0;margin-bottom:5rem;
+  opacity:0;animation:fadeIn .8s .5s forwards;
+}
+.marquee-track{
+  display:flex;gap:3rem;width:max-content;
+  animation:marquee 22s linear infinite;
+}
+.marquee-item{
+  font-family:'Space Mono',monospace;font-size:11px;
+  color:var(--faint);letter-spacing:.12em;text-transform:uppercase;
+  white-space:nowrap;display:flex;align-items:center;gap:3rem;
+}
+.marquee-item::after{content:'·';color:var(--a1)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-        .private-badge {
-            font-size: 0.65rem;
-            background: rgba(248, 81, 73, 0.1);
-            color: #f85149;
-            padding: 2px 8px;
-            border-radius: 10px;
-            border: 1px solid rgba(248, 81, 73, 0.2);
-            text-transform: uppercase;
-        }
+/* ── SECTIONS ── */
+.sections{display:flex;flex-direction:column;gap:1px;background:var(--border)}
 
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            .sub-container { grid-template-columns: 1fr; }
-        }
-    </style>
+.section{background:var(--bg)}
+
+.section-trigger{
+  display:flex;align-items:center;gap:2rem;
+  padding:1.8rem 2rem;
+}
+.section-num{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.1em;min-width:2rem;
+}
+.section-title{
+  font-size:1.6rem;font-weight:700;letter-spacing:-.02em;flex:1;
+}
+.section-count{
+  font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);
+}
+.section-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── PROJECT PANEL ── */
+.project-panel-inner{
+  border-top:1px solid var(--border);
+  padding:0 2rem 1.5rem;
+}
+
+/* ── PROJECT ROW ── */
+.proj{
+  display:flex;align-items:center;gap:1.5rem;
+  padding:1.1rem 0;
+  border-bottom:1px solid var(--border);
+  text-decoration:none;color:inherit;
+  position:relative;overflow:hidden;
+  transition:padding-left .2s;
+}
+.proj:last-child{border-bottom:none}
+.proj::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(56,189,248,.04));
+  transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.proj:hover::before{transform:translateX(0)}
+.proj:hover{padding-left:.75rem}
+
+.proj-idx{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--faint);min-width:1.8rem;
+}
+.proj-name{
+  font-size:1.05rem;font-weight:600;flex:0 0 200px;transition:color .2s;
+}
+.proj:hover .proj-name{color:var(--dot-color,var(--a1))}
+.proj-desc{font-size:12px;color:var(--muted);flex:1;line-height:1.4}
+.proj-badge{
+  font-family:'Space Mono',monospace;font-size:8px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border:1px solid var(--border2);color:var(--muted);flex-shrink:0;
+}
+.proj-arrow{
+  font-size:16px;color:var(--muted);
+  opacity:0;transform:translateX(-6px);
+  transition:opacity .2s,transform .2s;flex-shrink:0;
+}
+.proj:hover .proj-arrow{opacity:1;transform:translateX(0)}
+.proj-sub .proj-name{
+  font-weight:400;font-style:italic;color:var(--muted);
+  padding-left:1.2rem;font-size:.95rem;
+}
+.proj-private{opacity:.22;pointer-events:none}
+
+/* ── GLITCH ── */
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;
+  width:100%;height:100%;opacity:0;
+}
+.glitch:hover::before{
+  color:var(--a1);
+  clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);
+  transform:translateX(-3px);
+  animation:glitch1 .3s steps(1) infinite;opacity:1;
+}
+.glitch:hover::after{
+  color:var(--a4);
+  clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);
+  transform:translateX(3px);
+  animation:glitch2 .3s steps(1) infinite;opacity:1;
+}
+@keyframes glitch1{0%,100%{clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%);transform:translateX(-3px)}50%{clip-path:polygon(0 55%,100% 55%,100% 75%,0 75%);transform:translateX(2px)}}
+@keyframes glitch2{0%,100%{clip-path:polygon(0 65%,100% 65%,100% 85%,0 85%);transform:translateX(3px)}50%{clip-path:polygon(0 5%,100% 5%,100% 25%,0 25%);transform:translateX(-2px)}}
+
+/* ── FOOTER ── */
+footer{
+  margin-top:6rem;padding-top:2rem;
+  border-top:1px solid var(--border2);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+footer span{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em}
+.footer-status{display:flex;align-items:center;gap:8px}
+.status-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--a1);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(56,189,248,.5)}50%{opacity:.7;box-shadow:0 0 0 7px rgba(56,189,248,0)}}
+
+/* ── ANIMS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .wrap{padding:0 1rem 4rem}
+  nav{margin-bottom:3rem;margin-left:-1rem;margin-right:-1rem;padding-left:1rem;padding-right:1rem}
+  .nav-orgs,.nav-sections{display:none}
+  .hero-h1{font-size:3.2rem}
+  .hero-nums{gap:1.5rem}
+  .hero-n{font-size:2.5rem}
+  .proj-desc{display:none}
+  .proj-name{flex:1}
+  .section-trigger{padding:1.2rem}
+  .section-title{font-size:1.2rem}
+  body{cursor:auto}
+  #cursor{display:none}
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>MyDev</h1>
-        <p>A centralized hub for my tools, study platforms, and tech experiments.</p>
-    </header>
+<div id="progress"></div>
+<div id="cursor"></div>
+<div class="grain"></div>
 
-    <div class="container" id="main-container"></div>
+<!-- ANIMATED MESH BG -->
+<div class="mesh">
+  <div class="mesh-orb"></div>
+  <div class="mesh-orb"></div>
+  <div class="mesh-orb"></div>
+  <div class="mesh-grid"></div>
+</div>
 
-    <script>
-        // API de capture d'écran automatique (thum.io)
-        // Crop/800 permet de limiter la hauteur de capture pour un chargement plus rapide
-        const getShot = (url) => `https://image.thum.io/get/width/600/crop/800/${url}`;
+<div class="wrap">
 
-        const projects = [
-            { title: "Parashiot", desc: "Weekly Torah portion study and tracking tool.", url: "https://parashiot.lovable.app/", cat: "Torah & Study", icon: "book-open" },
-            { title: "Tehilim", desc: "Interactive reading platform for Tehilim study.", url: "https://gregysite.github.io/Tehilim/", cat: "Torah & Study", icon: "scroll" },
-            { title: "Mishna", desc: "Comprehensive digital portal for Mishnaic texts.", url: "https://gregysite.github.io/Mishna/", cat: "Torah & Study", icon: "library" },
-            { title: "Ohavei Tsion", desc: "Jerusalem community hub and local info portal.", url: "https://ohaveitsion.github.io/Jerusalem/", cat: "Jerusalem", icon: "map-pin" },
-            { title: "The Kotel", desc: "A digital experience focused on the Western Wall.", url: "https://gregysite.github.io/Kotel", cat: "Jerusalem", icon: "landmark" },
-            { title: "Wash Timer", desc: "Household utility for smart shower duration management.", url: "http://washtimer.lovable.app/", cat: "Web Apps", icon: "timer" },
-            { title: "MyDressing", desc: "Visual organizer for wardrobe and style planning.", url: "https://mydressing.lovable.app/", cat: "Web Apps", icon: "shirt" },
-            { title: "Link Players", desc: "Connectivity dashboard for player networking.", url: "https://linkplayers.lovable.app/", cat: "Web Apps", icon: "users" },
-            { 
-                title: "Alert Miklat", 
-                desc: "Integrated safety information and shelter alert system.", 
-                url: "https://gregysite.github.io/AlertMiklat/", 
-                cat: "Web Apps", 
-                icon: "shield-alert",
-                // Sous-rubriques spécifiques
-                subs: [
-                    { title: "Defense Spending", url: "https://gregysite.github.io/AlertMiklat/compteur.html", icon: "trending-up" },
-                    { title: "Missile Analytics", url: "https://gregysite.github.io/AlertMiklat/analytics.html", icon: "bar-chart-3" }
-                ]
-            },
-            { title: "Tele Portal", desc: "Private dashboard for media and IPTV management.", url: "", cat: "Media", icon: "tv", isPrivate: true }
-        ];
+<!-- NAV -->
+<nav>
+  <span class="nav-logo"><b>Greg</b> · dev portfolio</span>
+  <div class="nav-orgs">
+    <a href="https://github.com/GregySite" target="_blank" class="nav-org">GregySite</a>
+    <a href="https://github.com/OhaveiTsion" target="_blank" class="nav-org">OhaveiTsion</a>
+    <a href="https://github.com/ChromePluginStudio" target="_blank" class="nav-org">ChromePluginStudio</a>
+  </div>
+</nav>
 
-        const container = document.getElementById('main-container');
-        const categories = [...new Set(projects.map(p => p.cat))];
+<!-- HERO -->
+<div class="hero">
+  <h1 class="hero-h1">
+    <span class="glitch" data-text="Greg's">Greg's</span>
+    <span class="line2"><span class="accent">Pro</span>jects</span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">Apps, outils &amp; sites web — Torah, Jérusalem,<br>musique, utilitaires et extensions Chrome.</p>
+    <div class="hero-nums">
+      <div class="hero-num"><span class="hero-n">15</span><span class="hero-l">projets</span></div>
+      <div class="hero-num"><span class="hero-n">7</span><span class="hero-l">catégories</span></div>
+      <div class="hero-num"><span class="hero-n">3</span><span class="hero-l">orgs</span></div>
+    </div>
+  </div>
+</div>
 
-        categories.forEach(cat => {
-            // Nettoyage du titre de la catégorie pour l'ID HTML
-            const catId = cat.replace(/\s|&/g, '');
-            container.innerHTML += `<div class="category-title">${cat}</div><div class="grid" id="grid-${catId}"></div>`;
-            const grid = document.getElementById(`grid-${catId}`);
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Torah &amp; Study</span>
+    <span class="marquee-item">Jerusalem</span>
+    <span class="marquee-item">Music</span>
+    <span class="marquee-item">Web Apps</span>
+    <span class="marquee-item">Luxury &amp; Retail</span>
+    <span class="marquee-item">Chrome Extension</span>
+    <span class="marquee-item">Media</span>
+    <span class="marquee-item">Torah &amp; Study</span>
+    <span class="marquee-item">Jerusalem</span>
+    <span class="marquee-item">Music</span>
+    <span class="marquee-item">Web Apps</span>
+    <span class="marquee-item">Luxury &amp; Retail</span>
+    <span class="marquee-item">Chrome Extension</span>
+    <span class="marquee-item">Media</span>
+  </div>
+</div>
 
-            projects.filter(p => p.cat === cat).forEach(p => {
-                const isP = p.isPrivate;
-                const card = `
-                    <a href="${isP ? '#' : p.url}" class="card" ${isP ? '' : 'target="_blank"'}>
-                        <div class="preview" style="background-image: url('${isP ? 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600' : getShot(p.url)}')"></div>
-                        <div class="content">
-                            <div class="card-header">
-                                <i data-lucide="${p.icon}" size="20"></i>
-                                <h3>${p.title}</h3>
-                            </div>
-                            <p class="desc">${p.desc}</p>
-                            ${isP ? '<div style="margin-top:15px"><span class="private-badge">Private</span></div>' : ''}
-                        </div>
-                    </a>
-                `;
-                grid.innerHTML += card;
+<!-- SECTIONS -->
+<div class="sections reveal" id="allSections">
 
-                // Gestion des sous-rubriques (subs) si elles existent
-                if (p.subs) {
-                    const subGrid = document.createElement('div');
-                    subGrid.className = 'sub-container';
-                    p.subs.forEach(sub => {
-                        subGrid.innerHTML += `
-                            <a href="${sub.url}" target="_blank" class="sub-card">
-                                <div class="sub-preview" style="background-image: url('${getShot(sub.url)}')"></div>
-                                <div class="sub-content">
-                                    <i data-lucide="${sub.icon}" size="18"></i>
-                                    <span>${sub.title}</span>
-                                </div>
-                            </a>
-                        `;
-                    });
-                    grid.appendChild(subGrid);
-                }
-            });
-        });
+  <div class="section" data-idx="0">
+    <div class="section-trigger">
+      <span class="section-num">01</span>
+      <span class="section-dot" style="background:#a8d8b0"></span>
+      <span class="section-title">Torah &amp; Study</span>
+      <span class="section-count">03</span>
+    </div>
+    <div class="project-panel-inner">
+      <a class="proj" href="https://parashiot.lovable.app/" target="_blank" style="--dot-color:#a8d8b0">
+        <span class="proj-idx">01</span><span class="proj-name">Parashiot</span>
+        <span class="proj-desc">Lecture hebdomadaire de la Torah</span>
+        <span class="proj-badge">lovable</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://gregysite.github.io/Tehilim/" target="_blank" style="--dot-color:#a8d8b0">
+        <span class="proj-idx">02</span><span class="proj-name">Tehilim</span>
+        <span class="proj-desc">Lecteur des Psaumes</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://gregysite.github.io/Mishna/" target="_blank" style="--dot-color:#a8d8b0">
+        <span class="proj-idx">03</span><span class="proj-name">Mishna</span>
+        <span class="proj-desc">Outil d'étude de la Mishna</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
 
-        // Initialisation des icônes Lucide après la génération du HTML
-        lucide.createIcons();
-    </script>
+  <div class="section" data-idx="1">
+    <div class="section-trigger">
+      <span class="section-num">02</span>
+      <span class="section-dot" style="background:#e8c547"></span>
+      <span class="section-title">Jerusalem</span>
+      <span class="section-count">02</span>
+    </div>
+    <div class="project-panel-inner">
+      <a class="proj" href="https://ohaveitsion.github.io/Jerusalem/" target="_blank" style="--dot-color:#e8c547">
+        <span class="proj-idx">01</span><span class="proj-name">Ohavei Tsion</span>
+        <span class="proj-desc">Dashboard Synagogue — Jerusalem, Maftir &amp; Tehilim</span>
+        <span class="proj-badge">ohaveitsion</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://gregysite.github.io/Kotel" target="_blank" style="--dot-color:#e8c547">
+        <span class="proj-idx">02</span><span class="proj-name">The Kotel</span>
+        <span class="proj-desc">Le Mur des Lamentations</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section" data-idx="2">
+    <div class="section-trigger">
+      <span class="section-num">03</span>
+      <span class="section-dot" style="background:#c084fc"></span>
+      <span class="section-title">Music</span>
+      <span class="section-count">02</span>
+    </div>
+    <div class="project-panel-inner">
+      <a class="proj" href="https://gregysite.github.io/MusicMaker/" target="_blank" style="--dot-color:#c084fc">
+        <span class="proj-idx">01</span><span class="proj-name">MusicMaker</span>
+        <span class="proj-desc">Création musicale en ligne</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://gregysite.github.io/LyricStudio/" target="_blank" style="--dot-color:#c084fc">
+        <span class="proj-idx">02</span><span class="proj-name">LyricStudio</span>
+        <span class="proj-desc">Studio d'écriture de paroles</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section" data-idx="3">
+    <div class="section-trigger">
+      <span class="section-num">04</span>
+      <span class="section-dot" style="background:#38bdf8"></span>
+      <span class="section-title">Web Apps</span>
+      <span class="section-count">07</span>
+    </div>
+    <div class="project-panel-inner">
+      <a class="proj" href="http://washtimer.lovable.app/" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx">01</span><span class="proj-name">Wash Timer</span>
+        <span class="proj-desc">Minuteur pour machine à laver</span>
+        <span class="proj-badge">lovable</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://mydressing.lovable.app/" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx">02</span><span class="proj-name">MyDressing</span>
+        <span class="proj-desc">Garde-robe virtuelle</span>
+        <span class="proj-badge">lovable</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://linkplayers.lovable.app/" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx">03</span><span class="proj-name">Link Players</span>
+        <span class="proj-desc">Outil de liaison de joueurs</span>
+        <span class="proj-badge">lovable</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://gregysite.github.io/MySynerion/" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx">04</span><span class="proj-name">MySynerion</span>
+        <span class="proj-desc">Gestion des heures de travail</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://gregysite.github.io/AlertMiklat/" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx">05</span><span class="proj-name">Alert Miklat</span>
+        <span class="proj-desc">Alertes défense civile — Israël</span>
+        <span class="proj-badge">parent</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj proj-sub" href="https://gregysite.github.io/AlertMiklat/compteur.html" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx" style="color:var(--faint)">↳</span><span class="proj-name">Defense Spending</span>
+        <span class="proj-desc">Compteur budgétaire</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj proj-sub" href="https://gregysite.github.io/AlertMiklat/analytics.html" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx" style="color:var(--faint)">↳</span><span class="proj-name">Missile Analytics</span>
+        <span class="proj-desc">Dashboard d'analyse des frappes</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section" data-idx="4">
+    <div class="section-trigger">
+      <span class="section-num">05</span>
+      <span class="section-dot" style="background:#e8c547"></span>
+      <span class="section-title">Luxury &amp; Retail</span>
+      <span class="section-count">02</span>
+    </div>
+    <div class="project-panel-inner">
+      <a class="proj" href="https://gregysite.github.io/Boutiques/boutiquescartier.html" target="_blank" style="--dot-color:#e8c547">
+        <span class="proj-idx">01</span><span class="proj-name">Cartier</span>
+        <span class="proj-desc">Boutiques mondiales — ouvertures &amp; fermetures</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+      <a class="proj" href="https://gregysite.github.io/Boutiques/boutiques-vca.html" target="_blank" style="--dot-color:#e8c547">
+        <span class="proj-idx">02</span><span class="proj-name">Van Cleef &amp; Arpels</span>
+        <span class="proj-desc">Boutiques mondiales — ouvertures &amp; fermetures</span>
+        <span class="proj-badge">github</span><span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section" data-idx="5">
+    <div class="section-trigger">
+      <span class="section-num">06</span>
+      <span class="section-dot" style="background:#38bdf8"></span>
+      <span class="section-title">Chrome Extension</span>
+      <span class="section-count">01</span>
+    </div>
+    <div class="project-panel-inner">
+      <a class="proj" href="https://github.com/ChromePluginStudio" target="_blank" style="--dot-color:#38bdf8">
+        <span class="proj-idx">01</span><span class="proj-name">LinkedIn CRM Lite</span>
+        <span class="proj-desc">Tag, note &amp; suivi de contacts LinkedIn dans Chrome</span>
+        <span class="proj-badge">v1.1.0</span><span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section" data-idx="6">
+    <div class="section-trigger">
+      <span class="section-num">07</span>
+      <span class="section-dot" style="background:var(--faint)"></span>
+      <span class="section-title">Media</span>
+      <span class="section-count">01</span>
+    </div>
+    <div class="project-panel-inner">
+      <div class="proj proj-private">
+        <span class="proj-idx">01</span><span class="proj-name">Tele Portal</span>
+        <span class="proj-desc">Portail média personnel</span>
+        <span class="proj-badge" style="border-style:dashed">privé</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-status">
+    <span class="status-dot"></span>
+    <span>gregysite.github.io / MyDev</span>
+  </div>
+  <span>Built by Greg — 2026</span>
+</footer>
+
+</div>
+
+<script>
+// Cursor
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';
+  cur.style.top=e.clientY+'px';
+});
+document.querySelectorAll('a').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+document.addEventListener('mouseleave',()=>cur.classList.add('hidden'));
+document.addEventListener('mouseenter',()=>cur.classList.remove('hidden'));
+
+// Scroll progress
+const prog = document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const pct = window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  prog.style.width = Math.min(pct,100)+'%';
+});
+
+
+
+// Scroll reveal
+const revObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target)}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+// View Transition on links
+document.querySelectorAll('a[target="_blank"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    if(!document.startViewTransition){return}
+    e.preventDefault();
+    const href=a.href;
+    document.startViewTransition(()=>{
+      window.open(href,'_blank');
+    });
+  });
+});
+
+// Animated counters
+function animCount(el,target,dur){
+  let s=0,step=target/(dur/16);
+  const run=()=>{s=Math.min(s+step,target);el.textContent=Math.floor(s);if(s<target)requestAnimationFrame(run)};
+  requestAnimationFrame(run);
+}
+setTimeout(()=>{
+  document.querySelectorAll('.hero-n').forEach(el=>{
+    const v=parseInt(el.textContent);el.textContent='0';
+    animCount(el,v,900);
+  });
+},400);
+</script>
+
 </body>
 </html>
